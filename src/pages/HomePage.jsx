@@ -1,18 +1,34 @@
-import { appName } from '../config/env.js';
+import { useState } from 'react';
+import Navbar, { Sidebar } from '../components/Navbar.jsx';
+import Hero from '../components/Hero.jsx';
+import MovieGrid from '../components/MovieGrid.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function HomePage() {
+  const [view, setView] = useState('home');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const favourites = view === 'favourites';
+
+  function navigate(nextView) {
+    setView(nextView);
+    setMenuOpen(false);
+  }
+
   return (
-    <main className="flex min-h-screen items-center bg-[#101113] px-6 py-16 text-stone-100 sm:px-12">
-      <div className="mx-auto w-full max-w-5xl">
-        <p className="mb-12 text-sm font-semibold uppercase tracking-[0.25em] text-amber-300">{appName}</p>
-        <p className="mb-4 text-sm text-stone-400">A new movie discovery experience</p>
-        <h1 className="max-w-3xl text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">Your next great watch starts here.</h1>
-        <p className="mt-6 max-w-lg text-lg leading-relaxed text-stone-400">Explore movies, discover the details, and keep your favourites together.</p>
-        <div className="mt-14 border-t border-white/10 pt-6">
-          <p className="text-sm text-stone-300">Project foundation ready</p>
-          <p className="mt-2 text-sm text-stone-500">The movie catalogue, search, and favourites arrive in the next milestones.</p>
-        </div>
+    <div className="app-shell" id="home">
+      <a className="skip-link" href="#movies">Skip to movies</a>
+      <Navbar view={view} onNavigate={navigate} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((open) => !open)} />
+      <div className="dashboard">
+        <Sidebar view={view} open={menuOpen} onNavigate={navigate} />
+        <main className="main-content">
+          {!favourites && <Hero />}
+          <section className="movies-section" id="movies" aria-labelledby="movies-title">
+            <div className="section-heading"><h2 id="movies-title">{favourites ? 'Your favourites' : 'Movies'}</h2></div>
+            <MovieGrid favourites={favourites} />
+          </section>
+          <Footer />
+        </main>
       </div>
-    </main>
+    </div>
   );
 }
