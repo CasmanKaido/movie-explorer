@@ -3,6 +3,9 @@ import Icon from './Icon.jsx';
 
 export default function MovieCard({ movie }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const releaseDate = movie.releaseDate
+    ? new Date(`${movie.releaseDate}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+    : 'Release date unavailable';
 
   return (
     <article className="movie-card">
@@ -15,8 +18,9 @@ export default function MovieCard({ movie }) {
       </div>
       <div className="movie-card-info">
         <h3>{movie.title}</h3>
-        <p>{movie.year}{movie.genre && ` · ${movie.genre}`}</p>
-        {movie.rating != null && <span className="movie-rating"><Icon name="star" size={14} />{movie.rating}</span>}
+        <p>{releaseDate}</p>
+        {movie.genre && <p>{movie.genre}</p>}
+        <span className="movie-rating"><Icon name="star" size={14} />{movie.rating ?? 'Not rated'}</span>
       </div>
     </article>
   );
