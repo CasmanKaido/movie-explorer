@@ -1,14 +1,16 @@
+import { Link, useLocation } from 'react-router';
+import { formatReleaseDate } from '../utils/movieFormatting.js';
 import { useState } from 'react';
 import Icon from './Icon.jsx';
 
 export default function MovieCard({ movie }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const releaseDate = movie.releaseDate
-    ? new Date(`${movie.releaseDate}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
-    : 'Release date unavailable';
+  const location = useLocation();
+  const releaseDate = formatReleaseDate(movie.releaseDate);
 
   return (
     <article className="movie-card">
+      <Link className="movie-card-link" to={`/movie/${movie.id}`} state={{ from: location.pathname + location.search }} aria-label={`View details for ${movie.title}`}>
       <div className="movie-poster">
         {movie.poster && !imageFailed ? (
           <img src={movie.poster} alt={`${movie.title} poster`} loading="lazy" onError={() => setImageFailed(true)} />
@@ -22,6 +24,7 @@ export default function MovieCard({ movie }) {
         {movie.genre && <p>{movie.genre}</p>}
         <span className="movie-rating"><Icon name="star" size={14} />{movie.rating ?? 'Not rated'}</span>
       </div>
+      </Link>
     </article>
   );
 }
