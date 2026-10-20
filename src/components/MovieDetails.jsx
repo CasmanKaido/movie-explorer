@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from './Icon.jsx';
+import FavouriteButton from './FavouriteButton.jsx';
 import { formatReleaseDate, formatRuntime } from '../utils/movieFormatting.js';
 
 export default function MovieDetails({ movie }) {
@@ -25,6 +26,7 @@ export default function MovieDetails({ movie }) {
             <span>{formatReleaseDate(movie.releaseDate)}</span>
           </div>
           {movie.genres.length > 0 && <ul className="details-genres" aria-label="Genres">{movie.genres.map((genre) => <li key={genre}>{genre}</li>)}</ul>}
+          <div className="details-save"><FavouriteButton movie={movie} /></div>
           <section className="details-overview" aria-labelledby="overview-title">
             <h2 id="overview-title">Overview</h2>
             <p>{movie.description || 'No description available.'}</p>

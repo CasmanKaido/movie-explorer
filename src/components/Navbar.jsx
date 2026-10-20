@@ -3,7 +3,7 @@ import { appName } from '../config/env.js';
 import SearchArea from './SearchArea.jsx';
 import Icon from './Icon.jsx';
 
-export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu, searchValue, onSearchChange, onSearch }) {
+export default function Navbar({ savedCount = 0, view, onNavigate, menuOpen, onToggleMenu, searchValue, onSearchChange, onSearch }) {
   return (
     <header className="navbar">
       <div className="navbar-brand">
@@ -18,7 +18,7 @@ export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu, searc
       <div className="navbar-content">
         <nav className="top-navigation" aria-label="Main navigation">
           <Link to="/" className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={onNavigate}>Movies</Link>
-          <Link to="/favourites" className={view === 'favourites' ? 'active' : ''} aria-current={view === 'favourites' ? 'page' : undefined} onClick={onNavigate}>Favourites</Link>
+          <Link to="/favourites" className={view === 'favourites' ? 'active' : ''} aria-current={view === 'favourites' ? 'page' : undefined} onClick={onNavigate}>Favourites{savedCount > 0 && <span className="favourites-badge">{savedCount}</span>}</Link>
         </nav>
         <SearchArea value={searchValue} onChange={onSearchChange} onSearch={onSearch} />
       </div>
@@ -26,14 +26,14 @@ export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu, searc
   );
 }
 
-export function Sidebar({ view, open, onNavigate }) {
+export function Sidebar({ savedCount = 0, view, open, onNavigate }) {
   return (
     <aside className={`sidebar ${open ? 'is-open' : ''}`} id="sidebar">
       <nav aria-label="Browse movies">
         <p className="sidebar-label">Menu</p>
         <Link to="/" className={`sidebar-link ${view === 'home' ? 'active' : ''}`} onClick={onNavigate}><Icon name="discover" size={17} /><span>Discover</span></Link>
         <p className="sidebar-label library-label">Library</p>
-        <Link to="/favourites" className={`sidebar-link ${view === 'favourites' ? 'active' : ''}`} onClick={onNavigate}><Icon name="heart" size={17} /><span>Favourites</span></Link>
+        <Link to="/favourites" className={`sidebar-link ${view === 'favourites' ? 'active' : ''}`} onClick={onNavigate}><Icon name="heart" size={17} /><span>Favourites</span>{savedCount > 0 && <span className="favourites-badge">{savedCount}</span>}</Link>
       </nav>
     </aside>
   );

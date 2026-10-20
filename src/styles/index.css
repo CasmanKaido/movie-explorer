@@ -164,3 +164,21 @@ button:disabled { cursor: not-allowed; }
   .details-information dl { grid-template-columns: minmax(0, 1fr); gap: 19px; }
 }
 @media (prefers-reduced-motion: reduce) { .movie-card-link img { transition: none; } }
+
+.movie-card { position: relative; }
+.favourite-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 40px; padding: 0 15px; border: 1px solid #6380a34d; border-radius: 6px; background: #17283bdd; color: #c9d6e9; font-size: 12px; }
+.favourite-button:hover { color: white; border-color: #72adf2; background: #243e5b; }
+.favourite-button.is-saved { color: #72b5ff; }
+.favourite-button.is-saved svg { fill: currentColor; }
+.favourite-button.compact { position: absolute; top: 9px; right: 9px; min-height: 38px; width: 38px; padding: 0; border-radius: 50%; background: #0a1322df; }
+.favourite-button.compact:hover { background: #203b5a; }
+.hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 19px; }
+.hero-actions .primary-button { margin-top: 0; }
+.details-save { margin-top: 22px; }
+.top-navigation a { display: inline-flex; align-items: center; gap: 7px; }
+.favourites-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 10px; background: #284b71; color: #bddeff; font-size: 10px; }
+.sidebar-link .favourites-badge { margin-left: auto; }
+.favourites-section { margin-top: 4px; }
+.section-heading h1 { font-size: 22px; font-weight: 500; }
+.favourites-total { font-size: 11px; color: #93a4bc; }
+.favourites-notice { margin-bottom: 18px; padding: 12px 15px; border: 1px solid #8d714847; border-radius: 7px; color: #e0cba7; font-size: 12px; line-height: 1.7; }
