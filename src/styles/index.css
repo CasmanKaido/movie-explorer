@@ -119,3 +119,8 @@ button:disabled { cursor: not-allowed; }
 .footer-heading { display: flex; justify-content: space-between; gap: 20px; }
 .movie-credits { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 24px; line-height: 1.7; }
 .movie-credits img { display: block; width: 76px; height: auto; }
+
+.search-area:focus-within { box-shadow: 0 0 0 1px #3d8cd3; }
+.search-clear { display: grid; place-items: center; flex-shrink: 0; padding: 8px 2px; border: 0; background: transparent; color: #8c96ad; }
+.search-clear:hover, .search-button:hover { color: #e7f0ff; }
+.section-heading h2 { overflow-wrap: anywhere; }

@@ -1,7 +1,7 @@
 import MovieCard from './MovieCard.jsx';
 import Icon from './Icon.jsx';
 
-export default function MovieGrid({ movies = [], favourites = false, loading = false, error = '', onRetry }) {
+export default function MovieGrid({ movies = [], favourites = false, loading = false, error = '', onRetry, query = '' }) {
   if (loading) return <div className="empty-movies" role="status"><Icon name="film" size={30} /><p>Loading movies…</p></div>;
 
   if (error) {
@@ -12,8 +12,8 @@ export default function MovieGrid({ movies = [], favourites = false, loading = f
     return (
       <div className="empty-movies" role="status">
         <Icon name={favourites ? 'heart' : 'film'} size={30} />
-        <h3>{favourites ? 'No favourites yet' : 'No movies found'}</h3>
-        <p>{favourites ? 'The films you save will appear here.' : 'Try again later.'}</p>
+        <h3>{favourites ? 'No favourites yet' : query ? `No movies found for “${query}”` : 'No movies found'}</h3>
+        <p>{favourites ? 'The films you save will appear here.' : query ? 'Try a different title or check the spelling.' : 'Try again later.'}</p>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getMovies } from '../services/movies.js';
 
-export default function useMovies() {
+export default function useMovies(query = '') {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -9,16 +9,17 @@ export default function useMovies() {
 
   useEffect(() => {
     const controller = new AbortController();
+    setMovies([]);
     setLoading(true);
     setError('');
 
-    getMovies(controller.signal)
+    getMovies(query, controller.signal)
       .then((results) => { if (!controller.signal.aborted) setMovies(results); })
       .catch((failure) => { if (!controller.signal.aborted) setError(failure.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
 
     return () => controller.abort();
-  }, [attempt]);
+  }, [query, attempt]);
 
   return { movies, loading, error, retry: () => setAttempt((current) => current + 1) };
 }

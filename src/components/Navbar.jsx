@@ -2,7 +2,7 @@ import { appName } from '../config/env.js';
 import SearchArea from './SearchArea.jsx';
 import Icon from './Icon.jsx';
 
-export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu }) {
+export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu, searchValue, onSearchChange, onSearch }) {
   return (
     <header className="navbar">
       <div className="navbar-brand">
@@ -19,7 +19,7 @@ export default function Navbar({ view, onNavigate, menuOpen, onToggleMenu }) {
           <a href="#movies" className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={() => onNavigate('home')}>Movies</a>
           <a href="#movies" className={view === 'favourites' ? 'active' : ''} aria-current={view === 'favourites' ? 'page' : undefined} onClick={() => onNavigate('favourites')}>Favourites</a>
         </nav>
-        <SearchArea />
+        <SearchArea value={searchValue} onChange={onSearchChange} onSearch={onSearch} />
       </div>
     </header>
   );

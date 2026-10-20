@@ -17,12 +17,19 @@ export async function handleMovies(request, token, fetcher = fetch) {
     return json({ error: 'Movie service is not configured.', code: 'NOT_CONFIGURED' }, 503);
   }
 
+  const query = new URL(request.url).searchParams.get('q')?.trim() || '';
+  if (query.length > 100) return json({ error: 'Search must be 100 characters or fewer.' }, 400);
+
+  const params = new URLSearchParams({ language: 'en-US', page: '1', include_adult: 'false' });
+  if (query) params.set('query', query);
+  const endpoint = query ? '/search/movie' : '/movie/popular';
+
   const signal = AbortSignal.any([request.signal, AbortSignal.timeout(10000)]);
   const options = { headers: { Authorization: `Bearer ${token.trim()}`, accept: 'application/json' }, signal };
 
   try {
     const responses = await Promise.all([
-      fetcher(`${apiUrl}/movie/popular?language=en-US&page=1`, options),
+      fetcher(`${apiUrl}${endpoint}?${params}`, options),
       fetcher(`${apiUrl}/genre/movie/list?language=en-US`, options),
     ]);
     if (responses.some((response) => !response.ok)) {
