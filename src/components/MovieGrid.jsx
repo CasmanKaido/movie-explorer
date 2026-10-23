@@ -1,11 +1,12 @@
 import MovieCard from './MovieCard.jsx';
 import Icon from './Icon.jsx';
+import LoadingState from './LoadingState.jsx';
 
 export default function MovieGrid({ movies = [], favourites = false, loading = false, error = '', onRetry, query = '' }) {
-  if (loading) return <div className="empty-movies" role="status"><Icon name="film" size={30} /><p>Loading movies…</p></div>;
+  if (loading) return <LoadingState>Loading movies…</LoadingState>;
 
   if (error) {
-    return <div className="empty-movies"><p role="alert">{error}</p><button className="retry-button" onClick={onRetry}>Try again</button></div>;
+    return <div className="empty-movies"><h3>Unable to load movies</h3><p role="alert">{error}</p><button type="button" className="retry-button" onClick={onRetry}>Try again</button></div>;
   }
 
   if (movies.length === 0) {
