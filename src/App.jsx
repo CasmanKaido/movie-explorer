@@ -26,7 +26,8 @@ export default function App() {
   }, [location.key, location.pathname, location.search]);
 
   function searchMovies(value) {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(location.pathname === '/' ? location.search : '');
+    params.delete('q');
     if (value) params.set('q', value);
     setSearchValue(value);
     navigate({ pathname: '/', search: params.size ? `?${params}` : '' });
