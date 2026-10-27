@@ -1,40 +1,39 @@
+// Import { Link } from react-router.
 import { Link } from 'react-router';
+// Import { appName } from ../config/env.js.
 import { appName } from '../config/env.js';
+// Import SearchArea from ./SearchArea.jsx.
 import SearchArea from './SearchArea.jsx';
-import Icon from './Icon.jsx';
 
-export default function Navbar({ savedCount = 0, view, onNavigate, menuOpen, onToggleMenu, searchValue, onSearchChange, onSearch }) {
+// Keep the main navigation and movie search together in the header.
+export default function Navbar({ savedCount = 0, view, searchValue, onSearchChange, onSearch }) {
+  // Return the interface that React should display.
   return (
+    // Render the navbar area.
     <header className="navbar">
+      {/* Render the navbar brand area. */}
       <div className="navbar-brand">
-        <button className="menu-button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="sidebar" onClick={onToggleMenu}>
-          <Icon name={menuOpen ? 'close' : 'menu'} />
-        </button>
-        <Link to="/" className="brand" onClick={onNavigate}>
+        {/* Link to this app page without a full browser reload; mark the active page where applicable. */}
+        <Link to="/" className="brand">
+          {/* Render the brand arc area with accessible labelling. */}
           <span className="brand-arc" aria-hidden="true" />
+          {/* Render the span element. */}
           <span>{appName}</span>
         </Link>
       </div>
+      {/* Render the navbar content area. */}
       <div className="navbar-content">
+        {/* Render the top navigation area with accessible labelling. */}
         <nav className="top-navigation" aria-label="Main navigation">
-          <Link to="/" className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined} onClick={onNavigate}>Movies</Link>
-          <Link to="/favourites" className={view === 'favourites' ? 'active' : ''} aria-current={view === 'favourites' ? 'page' : undefined} onClick={onNavigate}>Favourites{savedCount > 0 && <span className="favourites-badge">{savedCount}</span>}</Link>
+          {/* Link to this app page without a full browser reload; mark the active page where applicable. */}
+          <Link to="/" className={view === 'home' ? 'active' : ''} aria-current={view === 'home' ? 'page' : undefined}>Movies</Link>
+          {/* Link to this app page without a full browser reload; mark the active page where applicable. */}
+          <Link to="/favourites" className={view === 'favourites' ? 'active' : ''} aria-current={view === 'favourites' ? 'page' : undefined}>Favourites{savedCount > 0 && <span className="favourites-badge">{savedCount}</span>}</Link>
         </nav>
+        {/* Render the SearchArea element. */}
         <SearchArea value={searchValue} onChange={onSearchChange} onSearch={onSearch} />
       </div>
     </header>
   );
 }
 
-export function Sidebar({ savedCount = 0, view, open, onNavigate }) {
-  return (
-    <aside className={`sidebar ${open ? 'is-open' : ''}`} id="sidebar">
-      <nav aria-label="Browse movies">
-        <p className="sidebar-label">Menu</p>
-        <Link to="/" className={`sidebar-link ${view === 'home' ? 'active' : ''}`} onClick={onNavigate}><Icon name="discover" size={17} /><span>Discover</span></Link>
-        <p className="sidebar-label library-label">Library</p>
-        <Link to="/favourites" className={`sidebar-link ${view === 'favourites' ? 'active' : ''}`} onClick={onNavigate}><Icon name="heart" size={17} /><span>Favourites</span>{savedCount > 0 && <span className="favourites-badge">{savedCount}</span>}</Link>
-      </nav>
-    </aside>
-  );
-}

@@ -1,3 +1,4 @@
+// Prepare movie categories for the steps below.
 export const movieCategories = [
   { id: 'popular', label: 'Popular' },
   { id: 'top-rated', label: 'Top Rated' },
